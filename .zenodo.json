@@ -1,0 +1,14 @@
+{
+  "title": "Recursive Metagraphs: A Graph-Theoretic Foundation for Deterministic Multiway Computation",
+  "upload_type": "publication",
+  "publication_type": "article",
+  "creators": [
+    {
+      "name": "Ross, James",
+      "affiliation": "Flying Robots Labs",
+      "orcid": "0009-0006-0025-7801"
+    }
+  ],
+  "description": "Paper I of the AIΩN Foundations Series. Introduces Recursive Metagraphs (RMGs)...",
+  "license": "CC-BY-4.0"
+}

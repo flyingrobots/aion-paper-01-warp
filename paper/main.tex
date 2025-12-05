@@ -1,0 +1,40 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{cite}
+
+\geometry{margin=1in}
+
+\title{Recursive Metagraphs:\\
+A Graph-Theoretic Foundation for Deterministic Multiway Computation}
+
+\author{James Ross\\
+\small Flying Robots Labs --- Independent Researcher\\
+\small ORCID: 0009-0006-0025-7801}
+
+\date{December 2025}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+This paper introduces Recursive Metagraphs (RMGs): recursively nested, typed open graphs 
+forming the foundational state model of the \AION{} computer. We develop an inductive 
+definition, categorical semantics, morphisms, and recursion principles, connecting RMGs 
+to adhesive graph rewriting and establishing them as the base object for deterministic 
+multiway computation developed in Papers II–VI of the \AION{} Foundations Series.
+\end{abstract}
+
+\input{sections/introduction.tex}
+\input{sections/definition.tex}
+\input{sections/category.tex}
+\input{sections/relations.tex}
+\input{sections/conclusion.tex}
+
+\bibliographystyle{alpha}
+\bibliography{refs}
+
+\end{document}
