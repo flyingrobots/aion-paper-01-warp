@@ -1,4 +1,5 @@
-# AIΩN Foundations — Paper I  
+# AIΩN Foundations — Paper I 
+
 ## Recursive Metagraphs: A New Graph-Theoretic Foundation for Deterministic Multiway Computation
 
 **James Ross**  
@@ -60,7 +61,7 @@ The compiled paper will appear in `./pdf/`.
 
 ---
 
-## 📚 AIΩN Foundations Series
+## AIΩN Foundations Series
 
 This paper is part of a six-paper foundational series:
 
@@ -73,15 +74,19 @@ This paper is part of a six-paper foundational series:
 
 ---
 
-## 📜 License
+## License
 
-All text and figures © 2025 James Ross.  
-Released under CC BY 4.0.  
-See `LICENSE` for details.
+AIΩN Runtime, JITOS, and associated software are © 2025 James Ross and licensed under the **Apache License, Version 2.0**.
+
+You may obtain a copy of the License at:  
+https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software  distributed under this License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
+
 
 ---
 
-## 🌐 More on AIΩN
+## More on AIΩN
 
 For updates, see the main AIΩN repository:  
 https://github.com/flyingrobots/aion

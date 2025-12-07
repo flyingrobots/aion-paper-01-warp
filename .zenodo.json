@@ -9,6 +9,6 @@
       "orcid": "0009-0006-0025-7801"
     }
   ],
-  "description": "Paper I of the AIΩN Foundations Series. Introduces Recursive Metagraphs (RMGs)...",
+  "description": "This paper introduces Recursive Metagraphs (RMGs): recursively nested, typed open graphs forming the foundational state model of the AIΩN computer. We develop an inductive definition, categorical semantics, morphisms, and recursion principles, connecting RMGs to adhesive graph rewriting and establishing them as the base object for deterministic multiway computation developed in Papers II–VI of the AIΩN Foundations Series.",
   "license": "CC-BY-4.0"
 }

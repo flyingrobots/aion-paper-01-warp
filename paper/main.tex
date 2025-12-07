@@ -1,38 +1,415 @@
 \documentclass[11pt]{article}
 
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{geometry}
-\usepackage{hyperref}
+% Page layout: compact, readable margins
+\usepackage[margin=1in]{geometry}
+
+% Basic math and formatting packages
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
 \usepackage{graphicx}
-\usepackage{cite}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{url}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 
-\geometry{margin=1in}
+% Theorem environments
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
 
-\title{Recursive Metagraphs:\\
-A Graph-Theoretic Foundation for Deterministic Multiway Computation}
+% Notation shortcuts (guarded to avoid clashes if already defined).
+% Use serif glyphs; stay italic whether in text or math, even inside italic theorems.
+\DeclareRobustCommand{\RMG}{\ifmmode\mathit{RMG}\else\textit{RMG}\fi}
+\ifdefined\Atom\else\newcommand{\Atom}{\operatorname{Atom}}\fi
+\ifdefined\depth\else\newcommand{\depth}{\operatorname{depth}}\fi
+\ifdefined\OGraph\else\newcommand{\OGraph}{\mathbf{OGraph}}\fi
+\ifdefined\OGraphT\else\newcommand{\OGraphT}{\mathbf{OGraph}_T}\fi
+\ifdefined\Graph\else\newcommand{\Graph}{\mathbf{Graph}}\fi
 
-\author{James Ross\\
-\small Flying Robots Labs --- Independent Researcher\\
-\small ORCID: 0009-0006-0025-7801}
+% Local macros and wordmarks
+\input{macros}
 
+\title{Recursive Metagraphs}
+\author{James Ross}
 \date{December 2025}
 
 \begin{document}
 
 \maketitle
+
 \begin{abstract}
-This paper introduces Recursive Metagraphs (RMGs): recursively nested, typed open graphs 
-forming the foundational state model of the \AION{} computer. We develop an inductive 
-definition, categorical semantics, morphisms, and recursion principles, connecting RMGs 
-to adhesive graph rewriting and establishing them as the base object for deterministic 
-multiway computation developed in Papers II–VI of the \AION{} Foundations Series.
+Many computational systems are best described as graphs of graphs of graphs:
+program call graphs whose nodes carry abstract syntax trees, distributed systems
+whose edges carry communication traces, or world models whose entities themselves
+contain rich internal structure.  Ordinary graphs and hypergraphs treat these
+layers separately.  This paper isolates a single, uniform object---the
+\emph{recursive metagraph} (RMG)---that captures this nested structure
+categorically.
+
+An RMG is a finite directed multigraph whose vertices and edges carry, as
+attachments, further RMGs, forming a well-founded tree of graph-shaped
+objects.  We give an inductive definition and an equivalent initial-algebra
+presentation, define morphisms and the category \textbf{RMG}, and show how
+ordinary typed graphs and hypergraphs embed fully and faithfully.  The
+construction is deliberately minimal: it is just expressive enough to serve as
+the state object for later work on DPO rewriting, deterministic concurrent
+semantics, holographic provenance, and observer geometry in the AI$\Omega$N
+Foundations series, while remaining simple enough to admit standard structural
+recursion and induction principles.
+
+This paper therefore does one job: to put recursive metagraphs on a clean,
+categorical footing so that later semantics and systems papers can treat them
+as a fixed base object rather than an informal data structure.
 \end{abstract}
 
-\input{sections/introduction.tex}
-\input{sections/definition.tex}
-\input{sections/category.tex}
-\input{sections/relations.tex}
-\input{sections/conclusion.tex}
+\section{Introduction}
+
+Complex software does not live in a single flat graph.  A compiler juggles
+syntax trees, control-flow graphs, and optimisation traces.  A database query
+planner tracks schemas, query plans, and execution traces.  An AI agent may
+carry a world model, internal goals, and a ledger of prior interactions.  In
+practice, engineers wire these together by hand as graphs of graphs of graphs.
+
+The usual mathematical tools---directed graphs, hypergraphs, typed open
+graphs---are excellent for flat structure, but awkward for nested structure.
+Every project invents its own ad hoc notion of ``graph with attached
+subgraphs'', usually encoded as a pile of pointers and conventions.  That makes
+it hard to transport results from one setting to another, and even harder to
+state semantics that talk about the whole stack at once.
+
+This paper extracts a minimal canonical object for this job: the
+\emph{recursive metagraph} (RMG).  Informally, you take an ordinary finite
+directed multigraph (the \emph{skeleton}) and allow each vertex and edge to
+carry its own attached RMG, and those attachments may themselves have
+attachments, and so on, but with the guarantee that this nesting is finite and
+well-founded.
+
+There are many formalisms in the same neighbourhood (nested graphs, bigraphs,
+hierarchical state machines, etc.).  The design choice here is ruthlessly
+pragmatic:
+
+\begin{itemize}
+  \item use as little structure as possible beyond standard typed graphs;
+  \item make the construction compatible with adhesive categories and DPO
+        graph rewriting~\cite{EL97,LS08}, so that rewriting extends cleanly;
+  \item support both an inductive definition and an initial-algebra view, so
+        that structural recursion and induction are available out of the box.
+\end{itemize}
+
+Everything else in the AI$\Omega$N Foundations series sits on top of this
+object.  Later papers will use RMGs as the state space for deterministic
+multiway rewriting, holographic provenance, rulial distance between observers,
+and operating-system-level architecture.  Those topics are deliberately kept
+offstage here; this paper focuses entirely on the definition and basic
+categorical properties of RMGs.
+
+\paragraph{Contributions.}
+The specific contributions are:
+
+\begin{enumerate}
+  \item A precise inductive definition of recursive metagraphs as the least
+        class generated by atomic payloads and decorated skeleton graphs.
+
+  \item An equivalent initial-algebra presentation via a finitary polynomial
+        endofunctor, yielding canonical recursion and induction schemes.
+
+  \item A notion of morphism making RMGs into a category \textbf{RMG}, together
+        with a faithful forgetful functor to the category of finite directed
+        multigraphs.
+
+  \item A relation to standard models: ordinary typed open graphs and
+        hypergraphs embed fully and faithfully into suitable RMGs, so existing
+        graph-based semantics extend without change.
+\end{enumerate}
+
+\paragraph{Structure of the paper.}
+Section~\ref{sec:rmg-inductive} gives the inductive definition and some running
+examples.  Section~\ref{sec:rmg-initial} recasts RMGs as an initial algebra.
+Section~\ref{sec:rmg-unfold} introduces finite unfoldings and recursion schemes.
+Section~\ref{sec:rmg-morphisms} defines morphisms and the category
+\textbf{RMG}.  Section~\ref{sec:rmg-relation} relates RMGs to ordinary graphs
+and hypergraphs and sketches how this sets the stage for DPO rewriting in later
+work.  Section~\ref{sec:rmg-notation} summarises the main notation.
+
+\section{Recursive Metagraphs}
+\label{sec:rmg}
+
+In this section we define recursive metagraphs and relate them to standard
+graph models.  Throughout, a \emph{directed multigraph} $S$ is a tuple
+$(V_S, E_S, s_S, t_S)$ with finite sets of vertices $V_S$ and edges $E_S$ and
+source and target maps
+\[
+  s_S, t_S : E_S \to V_S.
+\]
+We write $V(S)$ and $E(S)$ when the underlying graph is clear from context.
+
+Intuitively, an RMG has two layers:
+
+\begin{itemize}
+  \item a finite skeleton graph $S$ that describes the coarse shape of the
+        state; and
+  \item an \emph{attachment} at each vertex and edge, which is itself an RMG,
+        capturing nested structure or payload.
+\end{itemize}
+
+Iterating attachments produces a finite, well-founded tree of graphs.  The rest
+of the section spells this out.
+
+\subsection{Inductive definition}
+\label{sec:rmg-inductive}
+
+Fix a set $P$ of \emph{atomic payloads}: literals, external identifiers, or
+other opaque data items.  Think of $P$ as the stuff we are not going to model
+internally (bytestrings, floats, external object IDs, \dots).
+
+\begin{definition}[Recursive metagraph]
+The class $\RMG$ of recursive metagraphs is the least set closed under the
+following two constructors:
+\begin{enumerate}
+  \item For each $p \in P$ there is an \emph{atom} $\Atom(p) \in \RMG$.
+
+  \item If $S = (V_S, E_S, s_S, t_S)$ is a finite directed multigraph and
+        $\alpha : V_S \to \RMG$ and $\beta : E_S \to \RMG$ are attachment
+        assignments, then the triple
+        \[
+          (S, \alpha, \beta) \in \RMG.
+        \]
+\end{enumerate}
+We call $S$ the \emph{skeleton} and $\alpha$ and $\beta$ the \emph{vertex} and
+\emph{edge} attachments.
+\end{definition}
+
+This is a standard well-founded inductive definition: every RMG is either a
+bare atom or a finite skeleton whose vertices and edges carry smaller RMGs.
+Because the construction is least, every RMG can be \emph{built up} from atoms
+by finitely many applications of the second clause.
+
+\begin{example}[Program call graph with attached syntax and provenance]
+Consider a tiny program with functions $f$ and $g$ and a single call
+$f \to g$.  The skeleton graph $S$ has two vertices $v_f, v_g$ and one edge
+$e_{\mathrm{call}} : v_f \to v_g$.  Attach to $v_f$ and $v_g$ the abstract
+syntax trees of the corresponding functions, and attach to $e_{\mathrm{call}}$
+a small provenance graph recording optimisation choices or profiling data.
+
+This yields an RMG $(S, \alpha, \beta)$ in which the coarse call graph,
+per-function syntax, and per-call provenance all live in the same object.  The
+attachments can themselves carry attachments, so syntax trees or provenance
+graphs may be recursively structured without any change to the definition.
+\end{example}
+
+It is often convenient to write an RMG informally as
+\[
+  U = (G; \alpha, \beta),
+\]
+with $G$ emphasising the skeleton and $(\alpha, \beta)$ the attachments.
+
+\subsection{Initial algebra viewpoint}
+\label{sec:rmg-initial}
+
+The inductive definition above already gives us a notion of recursion, but it is
+useful to rephrase RMGs as an initial algebra for a polynomial functor.  This
+makes structural recursion and induction theorems essentially automatic.
+
+Let $\mathcal{G}$ be a small set of isomorphism-class representatives of finite
+directed multigraphs (the allowed skeleton shapes).  Define a finitary
+endofunctor
+\[
+  F : \mathbf{Set} \to \mathbf{Set}
+\]
+by
+\[
+  F(X) \;=\; P \;\;+\!\!\!\!\sum_{S \in \mathcal{G}}\!\! (V_S \to X) \times (E_S \to X).
+\]
+An element of $F(X)$ is either an atom in $P$ or a choice of skeleton shape
+$S \in \mathcal{G}$ together with an $X$-label for each vertex and edge of $S$.
+
+\begin{proposition}
+Up to isomorphism, $\RMG$ is the carrier of the initial $F$-algebra.
+\end{proposition}
+
+Sketching the idea: the inductive clauses for $\RMG$ are exactly the clauses of
+an $F$-algebra structure $\mathit{in} : F(\RMG) \to \RMG$.  Conversely, given any
+$F$-algebra $(X, a)$, there is a unique \emph{fold}
+$\mathit{fold}_a : \RMG \to X$ that interprets atoms and skeletons according to
+$a$.  This is the usual initial-algebra story for polynomial functors.
+
+Practically, this tells you that to define a function out of RMGs, it suffices
+to say:
+
+\begin{itemize}
+  \item how it acts on atoms, and
+  \item given a skeleton $S$ and recursively computed results for all
+        attachments, how to combine those into a result for $(S, \alpha, \beta)$.
+\end{itemize}
+
+The result is then unique.  We will quietly rely on this pattern when defining
+operations on RMGs later.
+
+\subsection{Unfoldings and recursion schemes}
+\label{sec:rmg-unfold}
+
+Although RMGs are finite by definition, the attachment tree can be deep.  It is
+often useful to reason about them via finite-depth approximations.
+
+\begin{definition}[Depth]
+The \emph{depth} of an RMG $X$ is the length of the longest attachment chain in
+$X$.  Atoms have depth~0.  If $X = (S, \alpha, \beta)$, its depth is
+\[
+  \max\bigl\{ 1 + \depth(\alpha(v)), \; 1 + \depth(\beta(e))
+    \mid v \in V_S, e \in E_S \bigr\}.
+\]
+\end{definition}
+
+For $k \in \mathbb{N}$, define the \emph{$k$-unfolding} $\mathsf{unf}_k(X)$ to
+be the RMG obtained by:
+
+\begin{itemize}
+  \item keeping all structure at attachment depths $0,\dots,k-1$ unchanged; and
+  \item replacing every attachment at depth $\ge k$ by a fresh atom that
+        remembers only that ``something'' was there.
+\end{itemize}
+
+This can be defined by structural recursion on $X$.  Each $\mathsf{unf}_k(X)$
+is a finite RMG, and for $k \le \ell$ there is a natural embedding
+$\mathsf{unf}_k(X) \to \mathsf{unf}_\ell(X)$.
+
+The \emph{infinite unfolding} $\mathsf{unf}_\infty(X)$ is the directed colimit
+of the diagram
+\[
+  \mathsf{unf}_0(X) \to \mathsf{unf}_1(X) \to \mathsf{unf}_2(X) \to \cdots
+\]
+in $\mathbf{Set}$ (or in $\mathbf{RMG}$ if you prefer).  Intuitively it records,
+for each finite depth, what $X$ looks like up to that depth.  Every finite
+pattern that occurs in $X$ appears in some finite unfolding, so reasoning about
+$X$ can often be reduced to reasoning about all its approximants.
+
+We will not need any stronger universal property of $\mathsf{unf}_\infty(X)$ in
+this paper, but the picture is useful when thinking about observers and
+multiway systems in later work.
+
+\subsection{Morphisms and the category of recursive metagraphs}
+\label{sec:rmg-morphisms}
+
+To use RMGs as honest mathematical objects, we need a notion of morphism.
+
+First regard the set $P$ of atomic payloads as a discrete category $\mathbf{P}$:
+objects are elements of $P$, the only morphisms are identities.  We embed
+atoms into our category faithfully: there are no non-trivial maps between
+distinct atoms.
+
+\begin{definition}[RMG morphism]
+A \emph{morphism} $f : X \to Y$ of recursive metagraphs is defined by structural
+recursion on depth.
+
+\begin{itemize}
+  \item On atoms: a morphism $\Atom(p) \to \Atom(p')$ exists iff $p = p'$, in
+        which case it is the identity.
+
+  \item On composite objects: for
+        $X = (S, \alpha, \beta)$ and $Y = (S', \alpha', \beta')$, a morphism
+        $f : X \to Y$ consists of
+        \begin{enumerate}
+          \item a graph homomorphism of skeletons
+                \[
+                  f_V : V_S \to V_{S'}, \qquad f_E : E_S \to E_{S'}
+                \]
+                preserving sources and targets; and
+
+          \item for every vertex $v \in V_S$ a morphism of attachments
+                $f_v : \alpha(v) \to \alpha'(f_V(v))$, and for every edge
+                $e \in E_S$ a morphism
+                $f_e : \beta(e) \to \beta'(f_E(e))$.
+        \end{enumerate}
+\end{itemize}
+
+Composition and identities are defined componentwise.
+\end{definition}
+
+The recursion in the second clause is well-founded because attachments have
+strictly smaller depth than the composite they sit in.
+
+\begin{proposition}
+Recursive metagraphs and their morphisms form a category, written
+$\mathbf{RMG}$.
+\end{proposition}
+
+There is a forgetful functor
+\[
+  \pi : \mathbf{RMG} \to \mathbf{Graph}
+\]
+sending $(S, \alpha, \beta)$ to its skeleton $S$ and acting on morphisms by
+forgetting the attachment components.  This functor will later be refined to a
+fibration when we talk about rewriting on the ``skeleton plane'' and
+``attachment planes''; for now it simply records that every RMG lives over an
+ordinary finite directed multigraph.
+
+\subsection{Relation to ordinary and hypergraphs}
+\label{sec:rmg-relation}
+
+RMGs are intended to \emph{extend} rather than replace standard graph models.
+Two simple embeddings are particularly useful.
+
+\paragraph{Ordinary graphs as shallow RMGs.}
+Fix a set of atomic payloads $P$ with at least one distinguished element
+$p_\bullet$.  Every finite directed multigraph $S$ can be viewed as a recursive
+metagraph by attaching the constant atom $\Atom(p_\bullet)$ to every vertex and
+edge:
+\[
+  \iota_{\mathrm{graph}}(S)
+    = (S, \alpha, \beta)
+\]
+with $\alpha(v) = \Atom(p_\bullet)$ and
+$\beta(e) = \Atom(p_\bullet)$ for all $v,e$.  Morphisms of graphs lift in the
+obvious way.  This gives a fully faithful embedding of the category of finite
+directed multigraphs into $\mathbf{RMG}$ as the subcategory of depth-$1$
+objects with trivial attachments.
+
+\paragraph{Hypergraphs via typed open graphs.}
+Let $\OGraphT$ be a category of $T$-typed open graphs as in
+Lack--Soboci\'nski~\cite{LS08}: objects are cospans $I \hookrightarrow G \hookleftarrow O$
+of monomorphisms and morphisms are commuting maps of cospans.  This category is
+adhesive, and typed hypergraphs embed fully and faithfully via the usual
+incidence construction~\cite{EL97}.  In particular, DPO rewriting is
+well-behaved in $\OGraph_T$.
+
+We can regard an RMG whose skeleton lies in $\OGraphT$ as a ``recursive typed
+open graph'': the base graph has open inputs and outputs, and attachments live
+in the fibres over nodes and edges.  The forgetful functor
+$\pi : \mathbf{RMG} \to \OGraphT$ simply drops attachments.  In the companion
+paper on deterministic multiway semantics, we will exploit this to lift DPO
+rewriting from skeletons to full RMG states.
+
+For the present paper, the key point is that RMGs \emph{subsume} ordinary typed
+open graphs and hypergraphs while adding recursively nested structure.  Any
+model expressible in the usual DPO setting can be expressed as a shallow RMG;
+models that genuinely need nested graphs get additional expressive power with
+no change to the underlying graph-theoretic machinery.
+
+\subsection{Notation summary}
+\label{sec:rmg-notation}
+
+For reference, we collect the main notation used in this paper.
+
+\begin{center}
+\begin{tabular}{ll}
+  Symbol & Meaning \\ \hline
+  $P$ & set of atomic payloads \\
+  $\Atom(p)$ & atomic RMG corresponding to $p \in P$ \\
+  $S = (V_S, E_S, s_S, t_S)$ & finite directed multigraph (skeleton) \\
+  $(S, \alpha, \beta)$ & RMG with vertex and edge attachments \\
+  $\RMG$ & class of all recursive metagraphs \\
+  $\mathbf{RMG}$ & category of recursive metagraphs and morphisms \\
+  $\depth(X)$ & depth of an RMG $X$ \\
+  $\mathsf{unf}_k(X)$ & $k$-unfolding (finite-depth approximation) \\
+  $\mathsf{unf}_\infty(X)$ & colimit of the unfolding tower of $X$ \\
+  $\pi : \mathbf{RMG} \to \mathbf{Graph}$ & forgetful functor to skeleton graphs
+\end{tabular}
+\end{center}
+
+Later papers in the AI$\Omega$N Foundations series will reuse this notation and
+add symbols for rewrite rules, provenance payloads, wormholes, and observer
+geometry.  In this first paper we deliberately stop at the level of static
+structure.
 
 \bibliographystyle{alpha}
 \bibliography{refs}

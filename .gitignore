@@ -14,3 +14,4 @@
 # Un-comment below to track the specific output PDF if needed, though git is bad at binary blobs.
 !pdf/aion-rmg.pdf
 !paper/figures/*.pdf
+*.pdf
