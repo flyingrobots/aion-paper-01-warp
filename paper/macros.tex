@@ -4,20 +4,3 @@
 \usetikzlibrary{positioning,calc,shapes.geometric}
 \newcommand{\AION}{\textrm{AI}\ensuremath{\Omega}\textrm{N}}
 \newcommand{\AIONProjectURL}{\url{https://github.com/flyingrobots/aion}}
-
-
-% ==========================================
-% ==========================================
-%  Wordmark: Display + Inline (uses serif roman + Greek Omega)
-% ==========================================
-\newcommand{\AIONWordmarkSerif}{%
-  {\rmfamily\Large A\kern0.15em I\kern0.2em \ensuremath{\Omega}\kern0.1em N}%
-}
-
-\newcommand{\AIONInline}{%
-  {\rmfamily A\kern0.12em I\kern0.16em \ensuremath{\Omega}\kern0.1em N}%
-}
-
-\newcommand{\AIONSignature}[1][0.28]{%
-  \raisebox{0.02em}{\smash{\AIONLogo[#1]}}\kern0.65em{\AIONWordmarkSerif}%
-}

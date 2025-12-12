@@ -7,7 +7,6 @@
 % Packages
 % ------------------------------------------------------------
 \RequirePackage[T1]{fontenc}
-\RequirePackage[utf8]{inputenc}
 \RequirePackage{lmodern}
 \RequirePackage{amsmath, amssymb, amsfonts, amsthm}
 \RequirePackage{microtype}
@@ -25,7 +24,6 @@
 % Geometry
 % ------------------------------------------------------------
 \geometry{
-    a4paper,
     margin=1in,
 }
 
@@ -59,7 +57,7 @@
 
 % Reset figure numbering by section for cleaner hyperlinks
 \counterwithin{figure}{section}
-\renewcommand{\theHfigure}{\thesection.\arabic{figure}.\arabic{page}}
+\renewcommand{\theHfigure}{\thesection.\arabic{figure}}
 
 % ------------------------------------------------------------
 % Theorem Environments
@@ -87,7 +85,17 @@
 \newcommand{\paperorcid}{}
 \newcommand{\paperdoi}{}
 
+\newcommand{\AION@require}[2]{%
+  \ifx#1\empty
+    \ClassError{aion}{#2 not set}{You must define #2 before \string\AIONTitlePage}
+  \fi
+}
+
 \newcommand{\AIONTitlePage}{
+    \AION@require{\papertitle}{\string\papertitle}
+    \AION@require{\papernumber}{\string\papernumber}
+    \AION@require{\paperauthor}{\string\paperauthor}
+    \AION@require{\paperdate}{\string\paperdate}
     \begin{center}
 
         {\Large\bfseries \papertitle \par}

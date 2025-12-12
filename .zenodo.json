@@ -1,16 +1,27 @@
 {
   "title": "WARP Graphs: A Worldline Algebra for Recursive Provenance",
   "upload_type": "publication",
-  "publication_type": "article",
+  "publication_type": "preprint",
   "creators": [
     {
       "name": "Ross, James",
-      "affiliation": "Flying Robots Labs",
+      "affiliation": "Independent Researcher",
       "orcid": "0009-0006-0025-7801"
     }
   ],
-  "description": "This paper introduces A Worldline Algebra for Recursive Provenance graphs (WARPs): recursively nested, typed open graphs forming the foundational state model of the AIΩN computer. We develop an inductive definition, categorical semantics, morphisms, and recursion principles, connecting WARPs to adhesive graph rewriting and establishing them as the base object for deterministic multiway computation developed in Papers II–VI of the AIΩN Foundations Series.",
+  "description": "This paper introduces WARP graphs (Worldline Algebra for Recursive Provenance): recursively nested, typed open graphs forming the foundational state model of the AIΩN computer. We develop an inductive definition, an initial-algebraic characterisation, a category of morphisms, and recursion principles, relating WARP graphs to adhesive graph rewriting and establishing them as the base object for deterministic multiway computation developed in Papers II–VI of the AIΩN Foundations Series.",
   "license": {
     "id": "CC-BY-4.0"
-  }
+  },
+  "keywords": [
+    "WARP graphs",
+    "graph rewriting",
+    "double pushout",
+    "adhesive categories",
+    "initial algebras",
+    "provenance",
+    "deterministic computation",
+    "multiway systems",
+    "AIΩN"
+  ]
 }
