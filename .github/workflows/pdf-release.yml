@@ -6,7 +6,7 @@ on:
     paths:
       - "aion.cls"
       - "paper/**"
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 permissions:
   contents: write
