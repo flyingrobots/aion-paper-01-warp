@@ -1,14 +1,8 @@
-% Macros for the CΩMPUTER book
-% Add shared commands here to keep chapters clean and consistent.
-
-% Example placeholders (feel free to replace or extend):
-% \newcommand{\Cbook}{C$\Omega$MPUTER}
-% \newcommand{\Rulial}{\textsc{Rulial}}
+% Macros for the WARPs paper
+% Shared commands to keep notation consistent across the manuscript.
+\usepackage{tikz} % Needed for \AIONLogo in this macros file
+\usetikzlibrary{positioning,calc,shapes.geometric}
 \newcommand{\AION}{\textrm{AI}\ensuremath{\Omega}\textrm{N}}
-\newcommand{\COMPUTER}{\textrm{C}\ensuremath{\Omega}\textrm{MPUTER}}
-\providecommand{\AIONWordmarkSerif}{\textrm{AION}}
-\providecommand{\AIONInline}{\textrm{AION}}
-\providecommand{\AIONSignature}[1][1]{\AIONWordmarkSerif}
 \newcommand{\AIONProjectURL}{\url{https://github.com/flyingrobots/aion}}
 
 
@@ -16,51 +10,14 @@
 % ==========================================
 %  Wordmark: Display + Inline (uses serif roman + Greek Omega)
 % ==========================================
-\renewcommand{\AIONWordmarkSerif}{%
+\newcommand{\AIONWordmarkSerif}{%
   {\rmfamily\Large A\kern0.15em I\kern0.2em \ensuremath{\Omega}\kern0.1em N}%
 }
 
-\renewcommand{\AIONInline}{%
+\newcommand{\AIONInline}{%
   {\rmfamily A\kern0.12em I\kern0.16em \ensuremath{\Omega}\kern0.1em N}%
 }
 
-% ---------------------------------------------------------
-% AION LOGO (circle + diamond + square)
-% ---------------------------------------------------------
-\newcommand{\AIONLogo}[1][1]{%
-\begin{tikzpicture}[scale=#1, baseline=-0.55ex, line cap=round, line join=round]
-    \def\R{1.05}
-    \def\s{0.55}
-    \def\lwOuter{0.52pt}
-    \def\lwInner{0.32pt}
-    \def\dot{0.07}
-
-    \path (0,\R) coordinate (N)
-          (0,-\R) coordinate (S)
-          (\R,0) coordinate (E)
-          (-\R,0) coordinate (W)
-          (\s,\s) coordinate (NE)
-          (-\s,\s) coordinate (NW)
-          (\s,-\s) coordinate (SE)
-          (-\s,-\s) coordinate (SW);
-
-    \draw[line width=\lwOuter] (0,0) circle (\R);
-    \draw[line width=\lwInner] (N) -- (E) -- (S) -- (W) -- cycle;
-    \draw[line width=\lwInner] (NW) rectangle (SE);
-
-    \draw[line width=\lwInner] (N) -- (NE);
-    \draw[line width=\lwInner] (N) -- (NW);
-    \draw[line width=\lwInner] (S) -- (SE);
-    \draw[line width=\lwInner] (S) -- (SW);
-    \draw[line width=\lwInner] (E) -- (NE);
-    \draw[line width=\lwInner] (E) -- (SE);
-    \draw[line width=\lwInner] (W) -- (NW);
-    \draw[line width=\lwInner] (W) -- (SW);
-
-    % no node dots
-\end{tikzpicture}%
-}
-
-\renewcommand{\AIONSignature}[1][0.28]{%
+\newcommand{\AIONSignature}[1][0.28]{%
   \raisebox{0.02em}{\smash{\AIONLogo[#1]}}\kern0.65em{\AIONWordmarkSerif}%
 }

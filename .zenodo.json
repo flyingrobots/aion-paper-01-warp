@@ -1,5 +1,5 @@
 {
-  "title": "Recursive Metagraphs: A Graph-Theoretic Foundation for Deterministic Multiway Computation",
+  "title": "WARP Graphs: A Worldline Algebra for Recursive Provenance",
   "upload_type": "publication",
   "publication_type": "article",
   "creators": [
@@ -9,6 +9,8 @@
       "orcid": "0009-0006-0025-7801"
     }
   ],
-  "description": "This paper introduces Recursive Metagraphs (RMGs): recursively nested, typed open graphs forming the foundational state model of the AIΩN computer. We develop an inductive definition, categorical semantics, morphisms, and recursion principles, connecting RMGs to adhesive graph rewriting and establishing them as the base object for deterministic multiway computation developed in Papers II–VI of the AIΩN Foundations Series.",
-  "license": "CC-BY-4.0"
+  "description": "This paper introduces A Worldline Algebra for Recursive Provenance graphs (WARPs): recursively nested, typed open graphs forming the foundational state model of the AIΩN computer. We develop an inductive definition, categorical semantics, morphisms, and recursion principles, connecting WARPs to adhesive graph rewriting and establishing them as the base object for deterministic multiway computation developed in Papers II–VI of the AIΩN Foundations Series.",
+  "license": {
+    "id": "CC-BY-4.0"
+  }
 }

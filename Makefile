@@ -1,6 +1,7 @@
 LATEXMK = latexmk
 SRC     = paper/main.tex
-JOBNAME = aion-rmg
+DEPS    = paper/macros.tex paper/diagrams.tex paper/refs.bib aion.cls $(wildcard paper/figures/*)
+JOBNAME = aion-WARP
 PDFDIR  = pdf
 
 .PHONY: all clean veryclean
@@ -10,12 +11,14 @@ all: $(PDFDIR)/$(JOBNAME).pdf
 $(PDFDIR):
 	mkdir -p $@
 
-$(PDFDIR)/$(JOBNAME).pdf: $(SRC) | $(PDFDIR)
-	cd paper && $(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error \
+$(PDFDIR)/$(JOBNAME).pdf: $(SRC) $(DEPS) | $(PDFDIR)
+	cd paper && TEXINPUTS="..:.:$(TEXINPUTS)" \
+	  $(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error -use-make \
 	  -jobname=$(JOBNAME) -output-directory=../$(PDFDIR) main.tex
 
 clean:
-	cd paper && $(LATEXMK) -C -jobname=$(JOBNAME) -output-directory=../$(PDFDIR)
+	cd paper && $(LATEXMK) -C -jobname=$(JOBNAME) -output-directory=../$(PDFDIR) main.tex
+	rm -f $(PDFDIR)/$(JOBNAME).*
 
 veryclean: clean
 	rm -f $(PDFDIR)/$(JOBNAME).pdf
