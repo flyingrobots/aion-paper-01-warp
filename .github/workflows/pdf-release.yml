@@ -27,7 +27,8 @@ jobs:
           os: debian
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -jobname=aion-WARP -output-directory=../pdf
         env:
-          TEXINPUTS: ..:.:
+        env:
+          TEXINPUTS: "..:.:"
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
