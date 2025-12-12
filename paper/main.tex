@@ -130,7 +130,7 @@ offstage here; this paper focuses entirely on the definition and basic
 categorical properties of \WARP s.
 
 \paragraph{Acknowledgments and prior art.}
-The graph-theoretic and categorical foundations underlying \WARP\ graphs draw on a long line of work in algebraic graph transformation, including the double-pushout approach and adhesive categories developed by Ehrig, Prange, Taentzer, Lack, Soboci\'nski, and others. Related formalisms for nested or hierarchical graph structure include bigraphs, hierarchical state machines, and various ``graph-of-graphs'' encodings used in program analysis and heterogeneous network theory.
+The graph-theoretic and categorical foundations underlying \WARP\ graphs draw on a long line of work in algebraic graph transformation, including the double-pushout approach and adhesive categories developed by Ehrig, Prange, Taentzer, Lack, Soboci\'nski, and others. Related formalisms for nested or hierarchical graph structure include bigraphs, hierarchical state machines (e.g., statecharts~\cite{Harel87}), coloured Petri nets~\cite{Jensen97}, and various ``graph-of-graphs'' encodings used in program analysis and heterogeneous network theory.
 
 The contribution of this work is not the invention of graph rewriting or nesting per se, but the isolation of a single initial-algebraic state object intended to serve as a common substrate for deterministic multiway semantics, explicit provenance payloads, and observer geometry developed in subsequent papers.
 Foundational references include standard treatments of algebraic graph
@@ -168,7 +168,7 @@ the broader \AION{} programme.  Section~\ref{sec:WARP-notation} summarises the
 main notation.
 
 \paragraph{Proof Sketches and References.}
-All categorical claims made here are standard consequences of the inductive definition and well-founded recursion. Detailed proofs follow directly from the theory of polynomial functors and algebraic graph transformation; see, e.g., Mac~Lane, Barr--Wells, Ad\'amek--Rosick\'y, and Ehrig~et~al.
+All categorical claims made here are standard consequences of the inductive definition and well-founded recursion. Detailed proofs follow directly from the theory of polynomial functors and algebraic graph transformation; see, e.g., \cite{MacLane98,AdamekRosicky94,EEPT06,EL97}.
 
 \clearpage
 
@@ -270,7 +270,7 @@ with $G$ emphasising the skeleton and $(\alpha, \beta)$ the attachments.
 
 The inductive definition above already gives us a notion of recursion, but it is
 useful to rephrase \WARP s as an initial algebra for a polynomial functor.  This
-makes structural recursion and induction theorems essentially automatic.
+makes structural recursion and induction theorems essentially automatic; see \cite{MacLane98,AdamekRosicky94}.
 
 Let $\mathcal{G}$ be a small set of isomorphism-class representatives of finite
 directed multigraphs (the allowed skeleton shapes).  Define a finitary

@@ -5,5 +5,6 @@
 \newcommand{\AION}{\textrm{AI}\ensuremath{\Omega}\textrm{N}}
 \newcommand{\AIONProjectURL}{\url{https://github.com/flyingrobots/aion}}
 
-% WARP term: small caps in prose, italic in math
-\DeclareRobustCommand{\WARP}{\ifmmode\mathit{WARP}\else\textsc{warp}\fi}
+% WARP term: small caps in prose, italic in math.
+% Force upright small caps in text to avoid missing scit font shapes.
+\DeclareRobustCommand{\WARP}{\ifmmode\mathit{WARP}\else{\upshape\scshape warp}\fi}
