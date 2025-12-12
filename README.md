@@ -23,7 +23,7 @@ December 2025
 
 This repository contains the LaTeX source, figures, and compiled PDF for **Paper I** of the *AIΩN Foundations Series*.
 
-This paper introduces **Worldline Algebra for Recursive Provenance Graphs (WARPs)** — a new graph object built from recursively nested typed open graphs. WARP graphs form the foundational data structure of the **AIΩN computer**, enabling deterministic multiway computation, holographic provenance, and worldline-level reasoning.
+This paper introduces **WARP graphs (Worldline Algebra for Recursive Provenance)** — a recursive graph object built from finitely nested typed open graphs. WARP graphs form the foundational state data structure of the **AIΩN computer**, enabling deterministic multiway computation, holographic provenance, and worldline-level reasoning.
 
 Paper I develops:
 
@@ -49,6 +49,7 @@ Zenodo DOI: *TBD after release*
 
 - `paper/main.tex` — Primary LaTeX manuscript
 - `paper/macros.tex` — Command definitions
+- `paper/diagrams.tex` — TikZ diagrams and global styles
 - `paper/refs.bib` — References
 - `paper/figures/` — Diagrams
 - `pdf/` — Compiled PDF (release artifacts)

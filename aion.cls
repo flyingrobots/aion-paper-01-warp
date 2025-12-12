@@ -10,7 +10,6 @@
 \RequirePackage{lmodern}
 \RequirePackage{amsmath, amssymb, amsfonts, amsthm}
 \RequirePackage{microtype}
-\RequirePackage{hyperref}
 \RequirePackage{geometry}
 \RequirePackage{xcolor}
 \RequirePackage{graphicx}
@@ -19,6 +18,7 @@
 \RequirePackage{enumitem}
 \RequirePackage{booktabs}
 \RequirePackage{chngcntr}
+\RequirePackage{hyperref}
 
 % ------------------------------------------------------------
 % Geometry

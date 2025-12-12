@@ -89,10 +89,10 @@
 % Diagram B — Finite unfolding tower
 \newcommand{\DiagramUnfoldingTower}{
   \begin{tikzpicture}[>=stealth, node distance=1.8cm]
-    \node (x0) [warpstage] {$\mathrm{unf}_0(X)$};
-    \node (x1) [warpstage, below of=x0] {$\mathrm{unf}_1(X)$};
-    \node (x2) [warpstage, below of=x1] {$\mathrm{unf}_2(X)$};
-    \node (xinfty) [warpstage, below of=x2] {$\mathrm{unf}_\infty(X)$};
+    \node (x0) [warpstage] {$\mathsf{unf}_0(X)$};
+    \node (x1) [warpstage, below of=x0] {$\mathsf{unf}_1(X)$};
+    \node (x2) [warpstage, below of=x1] {$\mathsf{unf}_2(X)$};
+    \node (xinfty) [warpstage, below of=x2] {$\mathsf{unf}_\infty(X)$};
     \draw[warp edge] (x0) -- (x1);
     \draw[warp edge] (x1) -- (x2);
     \draw[warp edge] (x2) -- (xinfty);
