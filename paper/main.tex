@@ -71,7 +71,7 @@ For the full legal code of the license, see:\\[0.25em]
 \begin{abstract}
 Many computational systems are best described as graphs of graphs of graphs.
 This paper introduces \WARP\ graphs (Worldline Algebra for Recursive Provenance), a minimal categorical
-structure that captures nested graph-shaped state. Formally, a \WARP\ graph is a finite directed multigraph whose vertices and edges carry attached \WARP s, yielding a finite well-founded hierarchy. The ``worldline'' terminology anticipates the deterministic evolution of such states developed in subsequent papers; this paper focuses on the static state object. \WARP s unify hierarchical system structure, syntax, control
+structure that captures nested graph-shaped state. Formally, a \WARP\ graph is a finite directed multigraph whose vertices and edges carry attached \WARP s, yielding a finite well-founded hierarchy. The ``worldline'' terminology anticipates the deterministic evolution of such states developed in subsequent papers; there, rewrite sequences trace causal histories that resemble worldlines in spacetime diagrams. This paper focuses on the static state object. \WARP s unify hierarchical system structure, syntax, control
 flow, provenance, and traces into one algebraic
 object.  We give an inductive definition, an initial-algebra characterisation,
 a category of morphisms, and embeddings of ordinary graphs and hypergraphs.
@@ -167,6 +167,9 @@ graphs and hypergraphs.  Section~\ref{sec:WARP-outlook} briefly situates \WARP s
 the broader \AION{} programme.  Section~\ref{sec:WARP-notation} summarises the
 main notation.
 
+\paragraph{Proof Sketches and References.}
+All categorical claims made here are standard consequences of the inductive definition and well-founded recursion. Detailed proofs follow directly from the theory of polynomial functors and algebraic graph transformation; see, e.g., Mac~Lane, Barr--Wells, Ad\'amek--Rosick\'y, and Ehrig~et~al.
+
 \clearpage
 
 \section{Worldline Algebra for Recursive Provenance Graphs}
@@ -245,14 +248,14 @@ of optimisation passes).  All three attachments can themselves carry attachments
 if, say, a syntax tree node needs to store profiling \WARP s.  In one object the
 high-level call graph and nested payloads stay coherent.
 
-The figure shows this recursion: dashed mini-graphs hang off each attachment to
+The figure shows this recursion: tiny mini-graphs hang off each attachment to
 remind the reader that attachments are full \WARP s, not mere labels.
 \end{example}
 
 \begin{figure}[H]
   \centering
   \DiagramCallGraphExample
-  \caption{Worked example: call-graph skeleton with attached ASTs for $f$ and $g$, and provenance payload on the call edge. Dashed mini-graphs inside attachments make the recursive nesting explicit.}
+  \caption{Worked example: call-graph skeleton with attached ASTs for $f$ and $g$, and provenance payload on the call edge. Tiny mini-graphs inside attachments make the recursive nesting explicit.}
   \label{fig:WARP-structure}
 \end{figure}
 
@@ -307,16 +310,17 @@ operations on \WARP s later.
 \section{Depth and Unfoldings}
 \label{sec:WARP-unfold}
 
-Although WARPs are finite by definition, the attachment tree can be deep.  It is
+Although \WARP s are finite by definition, the attachment tree can be deep.  It is
 often useful to reason about them via finite-depth approximations.
 
 \begin{definition}[Depth]\label{def:depth}
-The \emph{depth} of a WARP $X$ is the length of the longest attachment chain in
+The \emph{depth} of a \WARP\ $X$ is the length of the longest attachment chain in
 $X$.  Atoms have depth~0.  If $X = (S, \alpha, \beta)$, its depth is
 \[
   \max\bigl\{ 1 + \depthOf(\alpha(v)), \; 1 + \depthOf(\beta(e))
     \mid v \in V_S, e \in E_S \bigr\}.
 \]
+If the skeleton $S$ has no vertices or edges, we define $\depthOf(X)=1$.
 \end{definition}
 
 For $k \in \mathbb{N}$, define the \emph{$k$-unfolding} $\mathsf{unf}_k(X)$ to
@@ -356,7 +360,7 @@ multiway systems in later work.
 \section{Morphisms and the Category of WARPs}
 \label{sec:WARP-morphisms}
 
-To use WARPs as honest mathematical objects, we need a notion of morphism.
+To use \WARP s as honest mathematical objects, we need a notion of morphism.
 
 First regard the set $P$ of atomic payloads as a discrete category $\mathbf{P}$:
 objects are elements of $P$, the only morphisms are identities.  We embed
@@ -364,7 +368,7 @@ atoms into our category faithfully: there are no non-trivial maps between
 distinct atoms.
 
 \begin{definition}[WARP morphism]\label{def:WARP-morphism}
-A \emph{morphism} $f : X \to Y$ of WARPs is defined by structural
+A \emph{morphism} $f : X \to Y$ of \WARP s is defined by structural
 recursion on depth.
 
 \begin{itemize}
@@ -388,7 +392,16 @@ recursion on depth.
         \end{enumerate}
 \end{itemize}
 
-Composition and identities are defined componentwise.
+Given $f : X \to Y$ and $g : Y \to Z$, their composite $g\circ f : X \to Z$ has
+components
+\[
+  (g\circ f)_V = g_V \circ f_V,\qquad (g\circ f)_E = g_E \circ f_E,
+\]
+and for each $v \in V_S$ and $e \in E_S$,
+\[
+  (g\circ f)_v = g_{f_V(v)} \circ f_v,\qquad (g\circ f)_e = g_{f_E(e)} \circ f_e.
+\]
+Identities are defined analogously.
 \end{definition}
 
 The recursion in the second clause is well-founded because attachments have
@@ -402,15 +415,17 @@ strictly smaller depth than the composite they sit in.
 \end{figure}
 
 \begin{proposition}\label{prop:two}
-WARPs and their morphisms form a category, written
+\WARP s and their morphisms form a category, written
 $\mathbf{WARP}$.
 \end{proposition}
+
+In this paper, we write $\mathbf{WARP}$ for the category of \WARP\ graphs and \WARP\ morphisms. In later papers, where multiple categories are in play, we may refer to this category as $\mathcal{W}$ for brevity.
 
 There is a forgetful functor
 \[
   \pi : \mathbf{WARP} \to \Graph
 \]
-sending $(S, \alpha, \beta)$ to its skeleton $S$, sending each atom $\Atom(p)$ to the empty graph, and acting on morphisms by forgetting the attachment components.  This functor will later be refined to a
+sending $(S, \alpha, \beta)$ to its skeleton $S$, sending each atom $\Atom(p)$ to the empty graph (reflecting the absence of skeletal structure at atomic leaves), and acting on morphisms by forgetting the attachment components.  This functor will later be refined to a
 fibration when we talk about rewriting on the ``skeleton plane'' and
 ``attachment planes''; for now it simply records that every \WARP\ lives over an
 ordinary finite directed multigraph.
@@ -511,7 +526,7 @@ For reference, we collect the main notation used in this paper.
 \begin{figure}[H]
   \centering
   \DiagramNestedWARP
-  \caption{Nested WARP Graphs: the middle vertex $w_2$ carries the inner WARP graph $X_1$; all other attachments are atoms.}
+  \caption{Nested \WARP\ graphs: the middle vertex $w_2$ carries the inner $X_1$; all other attachments are atoms.}
   \label{fig:appendix-nested}
 \end{figure}
 
