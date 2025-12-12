@@ -21,7 +21,6 @@
 % ------------------------------------------------------------
 % Notation shortcuts (guarded to avoid clashes)
 % ------------------------------------------------------------
-\DeclareRobustCommand{\WARP}{\ifmmode\mathit{WARP}\else\textit{WARP}\fi}
 \ifdefined\Atom\else\newcommand{\Atom}{\operatorname{Atom}}\fi
 \ifdefined\depthOf\else\DeclareMathOperator{\depthOf}{depth}\fi
 \ifdefined\OGraph\else\newcommand{\OGraph}{\mathbf{OGraph}}\fi
@@ -71,8 +70,8 @@ For the full legal code of the license, see:\\[0.25em]
 
 \begin{abstract}
 Many computational systems are best described as graphs of graphs of graphs.
-This paper introduces WARP graphs (Worldline Algebra for Recursive Provenance), a minimal categorical
-structure that captures nested graph-shaped state. Formally, a WARP graph is a finite directed multigraph whose vertices and edges carry attached WARPs, yielding a finite well-founded hierarchy. The ``worldline'' terminology anticipates the deterministic evolution of such states developed in subsequent papers; this paper focuses on the static state object. WARPs unify hierarchical system structure, syntax, control
+This paper introduces \WARP\ graphs (Worldline Algebra for Recursive Provenance), a minimal categorical
+structure that captures nested graph-shaped state. Formally, a \WARP\ graph is a finite directed multigraph whose vertices and edges carry attached \WARP s, yielding a finite well-founded hierarchy. The ``worldline'' terminology anticipates the deterministic evolution of such states developed in subsequent papers; this paper focuses on the static state object. \WARP s unify hierarchical system structure, syntax, control
 flow, provenance, and traces into one algebraic
 object.  We give an inductive definition, an initial-algebra characterisation,
 a category of morphisms, and embeddings of ordinary graphs and hypergraphs.
@@ -102,13 +101,14 @@ subgraphs'', usually encoded as a pile of pointers and conventions.  That makes
 it hard to transport results from one setting to another, and even harder to
 state semantics that talk about the whole stack at once.
 
-This paper extracts a minimal canonical object for this job: \emph{WARP graphs} (Worldline Algebra for Recursive Provenance).  Earlier drafts and companion notes used the name \emph{recursive metagraphs} (RMGs); we adopt \emph{WARP} to avoid collisions with existing uses of ``RMG'' and to emphasise the provenance/worldline interpretation.  Informally, you take an ordinary finite
+This paper extracts a minimal canonical object for this job: \WARP\ graphs (Worldline Algebra for Recursive Provenance).  Earlier drafts and companion notes used the name \emph{recursive metagraphs} (RMGs); we adopt \WARP\ to avoid collisions with existing uses of ``RMG'' and to emphasise the provenance/worldline interpretation.  Informally, you take an ordinary finite
 directed multigraph (the \emph{skeleton}) and allow each vertex and edge to
-carry its own attached WARP graph, and those attachments may themselves have
+carry its own attached \WARP\ graph, and those attachments may themselves have
 attachments, and so on, but with the guarantee that this nesting is finite and
 well-founded.
 
-We call an individual object a \emph{WARP graph}; when unambiguous, simply a \emph{WARP} (plural \emph{WARPs}).
+We call an individual object a \WARP\ graph; when unambiguous, simply a \WARP\ (plural \WARP s).
+
 
 There are many formalisms in the same neighbourhood (nested graphs, bigraphs,
 hierarchical state machines, etc.).  The design choice here is ruthlessly
@@ -123,14 +123,14 @@ pragmatic:
 \end{itemize}
 
 Everything else in the \AION{} Foundations series sits on top of this
-object.  Later papers will use WARPs as the state space for deterministic
+object.  Later papers will use \WARP s as the state space for deterministic
 multiway rewriting, holographic provenance, rulial distance between observers,
 and operating-system-level architecture.  Those topics are deliberately kept
 offstage here; this paper focuses entirely on the definition and basic
-categorical properties of WARPs.
+categorical properties of \WARP s.
 
 \paragraph{Acknowledgments and prior art.}
-The graph-theoretic and categorical foundations underlying WARP graphs draw on a long line of work in algebraic graph transformation, including the double-pushout approach and adhesive categories developed by Ehrig, Prange, Taentzer, Lack, Soboci\'nski, and others. Related formalisms for nested or hierarchical graph structure include bigraphs, hierarchical state machines, and various ``graph-of-graphs'' encodings used in program analysis and heterogeneous network theory.
+The graph-theoretic and categorical foundations underlying \WARP\ graphs draw on a long line of work in algebraic graph transformation, including the double-pushout approach and adhesive categories developed by Ehrig, Prange, Taentzer, Lack, Soboci\'nski, and others. Related formalisms for nested or hierarchical graph structure include bigraphs, hierarchical state machines, and various ``graph-of-graphs'' encodings used in program analysis and heterogeneous network theory.
 
 The contribution of this work is not the invention of graph rewriting or nesting per se, but the isolation of a single initial-algebraic state object intended to serve as a common substrate for deterministic multiway semantics, explicit provenance payloads, and observer geometry developed in subsequent papers.
 Foundational references include standard treatments of algebraic graph
@@ -141,29 +141,29 @@ Milner's bigraphs~\cite{Mil02}.
 The specific contributions are:
 
 \begin{enumerate}
-  \item A precise inductive definition of WARP graphs (Worldline Algebra for Recursive Provenance) as the least
+  \item A precise inductive definition of \WARP\ graphs (Worldline Algebra for Recursive Provenance) as the least
         class generated by atomic payloads and decorated skeleton graphs.
 
   \item An equivalent initial-algebra presentation via a finitary polynomial
         endofunctor, yielding canonical recursion and induction schemes.
 
-  \item A notion of morphism making WARPs into a category $\mathbf{WARP}$, together
+  \item A notion of morphism making \WARP s into a category $\mathbf{WARP}$, together
         with a forgetful functor to the category of finite directed
         multigraphs.
 
   \item A relation to standard models: ordinary typed open graphs and
-        hypergraphs embed fully and faithfully into suitable WARP graphs, so existing
+        hypergraphs embed fully and faithfully into suitable \WARP\ graphs, so existing
         graph-based semantics extend without change.
 \end{enumerate}
 
 \paragraph{Structure of the paper.}
-Section~\ref{sec:WARP} introduces the two-plane view of WARP graphs.
+Section~\ref{sec:WARP} introduces the two-plane view of \WARP\ graphs.
 Section~\ref{sec:WARP-inductive} gives the inductive definition and a worked
-example.  Section~\ref{sec:WARP-initial} recasts WARPs as an initial algebra.
+example.  Section~\ref{sec:WARP-initial} recasts \WARP s as an initial algebra.
 Section~\ref{sec:WARP-unfold} introduces depth and finite unfoldings.
 Section~\ref{sec:WARP-morphisms} defines morphisms and the category
-$\mathbf{WARP}$.  Section~\ref{sec:WARP-relation} relates WARP graphs to ordinary
-graphs and hypergraphs.  Section~\ref{sec:WARP-outlook} briefly situates WARPs in
+$\mathbf{WARP}$.  Section~\ref{sec:WARP-relation} relates \WARP\ graphs to ordinary
+graphs and hypergraphs.  Section~\ref{sec:WARP-outlook} briefly situates \WARP s in
 the broader \AION{} programme.  Section~\ref{sec:WARP-notation} summarises the
 main notation.
 
@@ -182,14 +182,14 @@ source and target maps
 We write $V(S)$ and $E(S)$ when the underlying graph is clear from context.
 
 \paragraph{Remark.}
-Although we state skeletons as plain finite multigraphs for concreteness, the recursive construction lifts verbatim to richer skeleton categories (for example typed open graphs $\OGraphT$).  We will exploit this generality when developing rewriting and provenance semantics on WARPs in later papers.
+Although we state skeletons as plain finite multigraphs for concreteness, the recursive construction lifts verbatim to richer skeleton categories (for example typed open graphs $\OGraphT$).  We will exploit this generality when developing rewriting and provenance semantics on \WARP s in later papers.
 
-Intuitively, a WARP graph has two layers:
+Intuitively, a \WARP\ graph has two layers:
 
 \begin{itemize}
   \item a finite skeleton graph $S$ that describes the coarse shape of the
         state; and
-  \item an \emph{attachment} at each vertex and edge, which is itself a WARP graph,
+  \item an \emph{attachment} at each vertex and edge, which is itself a \WARP\ graph,
         capturing nested structure or payload.
 \end{itemize}
 
@@ -222,9 +222,9 @@ We call $S$ the \emph{skeleton} and $\alpha$ and $\beta$ the \emph{vertex} and
 \emph{edge} attachments.
 \end{definition}
 
-This is a standard well-founded inductive definition: every WARP is either a
-bare atom or a finite skeleton whose vertices and edges carry smaller WARPs.
-Because the construction is least, every WARP can be \emph{built up} from atoms
+This is a standard well-founded inductive definition: every \WARP\ is either a
+bare atom or a finite skeleton whose vertices and edges carry smaller \WARP s.
+Because the construction is least, every \WARP\ can be \emph{built up} from atoms
 by finitely many applications of the second clause.
 
 \begin{example}[Program call graph with attached syntax and provenance]\label{ex:one}
@@ -234,7 +234,7 @@ $e_{\mathrm{call}} : v_f \to v_g$.  Attach to $v_f$ and $v_g$ the abstract
 syntax trees of the corresponding functions, and attach to $e_{\mathrm{call}}$
 a small provenance graph recording optimisation choices or profiling data.
 
-This yields a WARP $(S, \alpha, \beta)$ with
+This yields a \WARP\ $(S, \alpha, \beta)$ with
 \[
   V_S = \{v_f, v_g\},\qquad E_S = \{e_{\mathrm{call}}\},\qquad
   s_S(e_{\mathrm{call}})=v_f,\; t_S(e_{\mathrm{call}})=v_g.
@@ -242,11 +242,11 @@ This yields a WARP $(S, \alpha, \beta)$ with
 Attachments: $\alpha(v_f)$ and $\alpha(v_g)$ are the respective abstract syntax
 trees; $\beta(e_{\mathrm{call}})$ is a tiny provenance graph (e.g., a sequence
 of optimisation passes).  All three attachments can themselves carry attachments
-if, say, a syntax tree node needs to store profiling WARPs.  In one object the
+if, say, a syntax tree node needs to store profiling \WARP s.  In one object the
 high-level call graph and nested payloads stay coherent.
 
 The figure shows this recursion: dashed mini-graphs hang off each attachment to
-remind the reader that attachments are full WARPs, not mere labels.
+remind the reader that attachments are full \WARP s, not mere labels.
 \end{example}
 
 \begin{figure}[H]
@@ -256,7 +256,7 @@ remind the reader that attachments are full WARPs, not mere labels.
   \label{fig:WARP-structure}
 \end{figure}
 
-It is often convenient to write a WARP informally as
+It is often convenient to write a \WARP\ informally as
 \[
   U = (G; \alpha, \beta),
 \]
@@ -266,7 +266,7 @@ with $G$ emphasising the skeleton and $(\alpha, \beta)$ the attachments.
 \label{sec:WARP-initial}
 
 The inductive definition above already gives us a notion of recursion, but it is
-useful to rephrase WARPs as an initial algebra for a polynomial functor.  This
+useful to rephrase \WARP s as an initial algebra for a polynomial functor.  This
 makes structural recursion and induction theorems essentially automatic.
 
 Let $\mathcal{G}$ be a small set of isomorphism-class representatives of finite
@@ -292,7 +292,7 @@ $F$-algebra $(X, a)$, there is a unique \emph{fold}
 $\mathit{fold}_a : \WARP \to X$ that interprets atoms and skeletons according to
 $a$.  This is the usual initial-algebra story for polynomial functors.
 
-Practically, this tells you that to define a function out of WARPs, it suffices
+Practically, this tells you that to define a function out of \WARP s, it suffices
 to say:
 
 \begin{itemize}
@@ -302,7 +302,7 @@ to say:
 \end{itemize}
 
 The result is then unique.  We will quietly rely on this pattern when defining
-operations on WARPs later.
+operations on \WARP s later.
 
 \section{Depth and Unfoldings}
 \label{sec:WARP-unfold}
@@ -412,18 +412,18 @@ There is a forgetful functor
 \]
 sending $(S, \alpha, \beta)$ to its skeleton $S$, sending each atom $\Atom(p)$ to the empty graph, and acting on morphisms by forgetting the attachment components.  This functor will later be refined to a
 fibration when we talk about rewriting on the ``skeleton plane'' and
-``attachment planes''; for now it simply records that every WARP lives over an
+``attachment planes''; for now it simply records that every \WARP\ lives over an
 ordinary finite directed multigraph.
 
 \section{Relation to Ordinary Graphs and Hypergraphs}
 \label{sec:WARP-relation}
 
-WARPs are intended to \emph{extend} rather than replace standard graph models.
+\WARP s are intended to \emph{extend} rather than replace standard graph models.
 Two simple embeddings are particularly useful.
 
 \paragraph{Ordinary graphs as shallow WARPs.}
 Fix a set of atomic payloads $P$ with at least one distinguished element
-$p_\bullet$.  Every finite directed multigraph $S$ can be viewed as a shallow WARP graph by attaching the constant atom $\Atom(p_\bullet)$ to every vertex and
+$p_\bullet$.  Every finite directed multigraph $S$ can be viewed as a shallow \WARP\ graph by attaching the constant atom $\Atom(p_\bullet)$ to every vertex and
 edge:
 \[
   \iota_{\mathrm{graph}}(S)
@@ -450,33 +450,33 @@ adhesive, and typed hypergraphs embed fully and faithfully via the usual
 incidence construction~\cite{EL97,EEPT06}.  In particular, DPO rewriting is
 well-behaved in $\OGraphT$.
 
-We can regard a WARP graph whose skeleton lies in $\OGraphT$ as a ``recursive typed
+We can regard a \WARP\ graph whose skeleton lies in $\OGraphT$ as a ``recursive typed
 open graph'': the base graph has open inputs and outputs, and attachments live
 in the fibres over nodes and edges.  The forgetful functor
 $\pi : \mathbf{WARP} \to \OGraphT$ simply drops attachments.  In the companion
 paper on deterministic multiway semantics, we will exploit this to lift DPO
-rewriting from skeletons to full WARP states.
+rewriting from skeletons to full \WARP\ states.
 
-For the present paper, the key point is that WARPs \emph{subsume} ordinary typed
+For the present paper, the key point is that \WARP s \emph{subsume} ordinary typed
 open graphs and hypergraphs while adding recursively nested structure.  Any
-model expressible in the usual DPO setting can be expressed as a shallow WARP;
+model expressible in the usual DPO setting can be expressed as a shallow \WARP;
 models that genuinely need nested graphs get additional expressive power with
 no change to the underlying graph-theoretic machinery.  Related nested-graph
-formalisms such as bigraphs~\cite{Mil02} offer alternative semantics; WARPs
+formalisms such as bigraphs~\cite{Mil02} offer alternative semantics; \WARP s
 are intentionally minimal while remaining adhesive-friendly.
 
 \section{Discussion and Outlook}
 \label{sec:WARP-outlook}
 
-WARPs provide a minimal, well-founded ``graphs all the way down'' substrate that
+\WARP s provide a minimal, well-founded ``graphs all the way down'' substrate that
 is compatible with adhesive graph rewriting.  This paper isolates that object
-and its basic categorical properties so that later work can treat WARPs as the
+and its basic categorical properties so that later work can treat \WARP s as the
 canonical state space for nested computational systems.
 
 In the companion papers in the \AION{} Foundations series, we will build on this
-substrate to define deterministic multiway DPO rewriting on WARPs, show how
+substrate to define deterministic multiway DPO rewriting on \WARP s, show how
 boundary provenance can serve as a holographic encoding of interior evolution,
-and introduce an MDL-based geometry on observers (rulial distance) over WARP
+and introduce an MDL-based geometry on observers (rulial distance) over \WARP\
 universes.  The present definitions are designed precisely so those extensions
 lift from skeletons to full recursive states without changing the underlying
 graph-theoretic machinery.

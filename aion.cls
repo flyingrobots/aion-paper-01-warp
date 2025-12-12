@@ -48,11 +48,11 @@
 % Section Titles
 % ------------------------------------------------------------
 \titleformat{\section}
-  {\large\bfseries\color{AIONBlue}}
+  {\large\bfseries\color{AIONBlue!85!black}}
   {\thesection}{0.5em}{}
 
 \titleformat{\subsection}
-  {\normalsize\bfseries\color{AIONBlue}}
+  {\normalsize\bfseries\color{AIONBlue!85!black}}
   {\thesubsection}{0.5em}{}
 
 % Reset figure numbering by section for cleaner hyperlinks
@@ -96,27 +96,44 @@
     \AION@require{\papernumber}{\string\papernumber}
     \AION@require{\paperauthor}{\string\paperauthor}
     \AION@require{\paperdate}{\string\paperdate}
+
+    \thispagestyle{empty}
     \begin{center}
 
-        {\Large\bfseries \papertitle \par}
-        \vspace{8pt}
+        % Nudge the block slightly downward for visual gravity
+        \vspace*{1.5cm}
 
-        {\large AI$\Omega$N Foundations Series — \papernumber \par}
+        % Title (primary anchor)
+        {\Huge\bfseries \papertitle \par}
+        \vspace{14pt}
+
+        % Series / paper number (subtitle energy)
+        {\normalsize\scshape\color{AIONBlue}
+        AI$\Omega$N Foundations Series — \papernumber \par}
+
+        \vspace{16pt}
+
+        % Author block (confident, quiet)
+        {\large
+        \paperauthor \par}
+        \vspace{4pt}
+
+        {\normalsize
+        \paperaffiliation \\
+        ORCID: \paperorcid \par}
 
         \vspace{10pt}
-        \paperauthor \\
-        \paperaffiliation \\
-        ORCID: \paperorcid \\[6pt]
 
-        Date: \paperdate \\
+        {\normalsize
+        \paperdate \par}
+
     \end{center}
 
-    \vspace{3cm}
+    \vspace{2cm}
 }
 
 % ------------------------------------------------------------
 % Table of Contents formatting
 % ------------------------------------------------------------
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 
 \endinput
