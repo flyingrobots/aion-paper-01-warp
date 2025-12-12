@@ -1,102 +1,86 @@
 # AIΩN Foundations — Paper I
 
-## WARP Graphs: A Worldline Algebra for Recursive Provenance
+> [!note]
+>
+> 📄 Paper: WARP Graphs: A Worldline Algebra for Recursive Provenance
+>
+> DOI: https://doi.org/10.5281/zenodo.17908005
 
-### A New Graph-Theoretic Foundation for Deterministic Multiway Computation
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17908005.svg)](https://doi.org/10.5281/zenodo.17908005)
 
-**James Ross**  
-*Flying Robots Labs — Independent Researcher*  
-ORCID: [0009-0006-0025-7801](https://orcid.org/0009-0006-0025-7801)  
-License: CC BY 4.0
+# WARP Graphs: A Worldline Algebra for Recursive Provenance
 
-### Front Matter
-
-WARP Graphs: A Worldline Algebra for Recursive Provenance 
-James Ross (ORCID: [0009-0006-0025-7801](https://orcid.org/0009-0006-0025-7801))  
-Independent Researcher  
-AIΩN Foundations Series – Paper I  
-December 2025
-
----
+James Ross  
+_Independent Researcher_  
+ORCID: [https://orcid.org/0009-0006-0025-7801](0009-0006-0025-7801)  
+License: CC BY 4.0  
 
 ## Overview
 
-This repository contains the LaTeX source, figures, and compiled PDF for **Paper I** of the *AIΩN Foundations Series*.
+This repository contains the LaTeX source, figures, and compiled PDF for **Paper I** of the _AIΩN Foundations Series_.
 
-This paper introduces **WARP graphs (Worldline Algebra for Recursive Provenance)** — a recursive graph object built from finitely nested typed open graphs. WARP graphs form the foundational state data structure of the **AIΩN computer**, enabling deterministic multiway computation, holographic provenance, and worldline-level reasoning.
+The paper introduces **WARP graphs (Worldline Algebra for Recursive Provenance)** — a recursively defined **graph-of-graphs** object built from finitely nested typed open graphs. WARP graphs serve as the foundational state representation for the AIΩN computer, enabling deterministic multiway computation, holographic provenance, and worldline-level reasoning.
 
-Paper I develops:
+**Paper I establishes the object.**  
+Subsequent papers develop semantics, dynamics, and ethical implications on top of this foundation.
 
-- A formal definition of WARP graphs
-- A categorical treatment via initial algebras
-- Morphisms and recursion principles
-- Relationship to open graphs and hypergraphs
-- The attachment/skeleton decomposition
-- The WARP category
+Specifically, Paper I develops:
 
-This is the mathematical base on which Papers II–VI stand.
+- A formal inductive definition of WARP graphs
+- An initial-algebra characterisation
+- Morphisms, recursion principles, and depth/unfoldings
+- Embeddings of ordinary graphs and hypergraphs
+- The attachment / skeleton decomposition
+- The category $WARP$
 
----
+This paper is intended to be the canonical reference for the WARP graph construction.
 
-## PDF
-
-**[Download the PDF](./pdf/aion-WARP.pdf)**
-Zenodo DOI: *TBD after release*
-
----
-
-## Contents
+## Repository Contents
 
 - `paper/main.tex` — Primary LaTeX manuscript
-- `paper/macros.tex` — Command definitions
+- `paper/macros.tex` — Command and notation definitions
 - `paper/diagrams.tex` — TikZ diagrams and global styles
-- `paper/refs.bib` — References
-- `paper/figures/` — Diagrams
-- `pdf/` — Compiled PDF (release artifacts)
-
----
+- `paper/refs.bib` — Bibliography
+- `paper/figures/` — Diagram assets
+- `pdf/` — Compiled PDF (release artifact)
 
 ## Build Instructions
 
-Requires:
-- TeXLive or MiKTeX
-- `latexmk` recommended
+### Requirements
 
-Build with:
+- TeXLive or MiKTeX
+- latexmk (recommended)
+
+### Build
 
 ```bash
-cd paper
-latexmk -pdf main.tex
+make
 ```
-
 
 The compiled paper will appear in `./pdf/`.
 
----
-
 ## AIΩN Foundations Series
 
-This paper is part of a six-paper foundational series:
+This paper is the first of a six-paper foundational series:
 
-1. **WARP Graphs: A Worldline Algebra for Recursive Provenance** *(this repo)*
-2. WARP Graphs: Deterministic Multiway Semantics (Two-Plane DPO)
-3. WARP Graphs: Computational Holography & Provenance Payloads
-4. WARP Graphs: Rulial Distance & Observer Geometry
-5. WARP Graphs: Ethics of Deterministic Replay & Provenance Sovereignty
-6. The AIΩN Computer: Architecture & OS (JITOS)
+1. **WARP Graphs: A Worldline Algebra for Recursive Provenance** *(this repository)*
+2. *WARP Graphs: Deterministic Multiway Semantics (Two-Plane DPO)*
+3. *WARP Graphs: Computational Holography & Provenance Payloads*
+4. *WARP Graphs: Rulial Distance & Observer Geometry*
+5. *WARP Graphs: Ethics of Deterministic Replay & Provenance Sovereignty*
+6. *The AIΩN Computer: Architecture & OS (JITOS)*
 
----
+## License 
 
-## License
+**This repository contains only the Paper I manuscript**, figures, compiled PDF, and documentation.
 
-This repository contains only the Paper I manuscript, figures, compiled PDF, and documentation. These materials are © 2025 James Ross and licensed under **Creative Commons Attribution 4.0 (CC BY 4.0)**; see `LICENSE` for details.
+© 2025 James Ross.
+Licensed under **Creative Commons Attribution 4.0 (CC BY 4.0).**
+See [`LICENSE`](./LICENSE) for details.
 
-The AIΩN Runtime and JITOS software projects referenced by the paper are *not* part of this repository. Those separate codebases are licensed under the **Apache License, Version 2.0** (see their own repositories or [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)).
-
-
----
+The AIΩN runtime and JITOS software projects referenced by the paper are not part of this repository. Those codebases are licensed separately under the **Apache License, Version 2.0**.
 
 ## More on AIΩN
 
-For updates, see the main AIΩN repository:
-[github.com/flyingrobots/aion](https://github.com/flyingrobots/aion)
+For updates and related projects, see the main AIΩN repository:
+[https://github.com/flyingrobots/aion](https://github.com/flyingrobots/aion)
