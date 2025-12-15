@@ -1,19 +1,18 @@
 # AIΩN Foundations — Paper I
 
-> [!note]
->
-> 📄 Paper: WARP Graphs: A Worldline Algebra for Recursive Provenance
->
-> DOI: https://doi.org/10.5281/zenodo.17908005
+## WARP Graphs: A Worldline Algebra for Recursive Provenance
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17908005.svg)](https://doi.org/10.5281/zenodo.17908005)
+|  |  |  | 
+|--|--|--|
+| **DOI** | `10.5281/zenodo.17908005` | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17908005.svg)](https://doi.org/10.5281/zenodo.17908005) |
 
-# WARP Graphs: A Worldline Algebra for Recursive Provenance
+**James Ross**  
+*Independent Researcher*  
+ORCID: [0009-0006-0025-7801](https://orcid.org/0009-0006-0025-7801)  
+License: CC BY 4.0
+December 2025
 
-James Ross  
-_Independent Researcher_  
-ORCID: [https://orcid.org/0009-0006-0025-7801](0009-0006-0025-7801)  
-License: CC BY 4.0  
+---
 
 ## Overview
 
@@ -64,7 +63,7 @@ The compiled paper will appear in `./pdf/`.
 This paper is the first of a six-paper foundational series:
 
 1. **WARP Graphs: A Worldline Algebra for Recursive Provenance** *(this repository)*
-2. *WARP Graphs: Deterministic Multiway Semantics (Two-Plane DPO)*
+2. [*WARP Graphs: Canonical State Evolution and Deterministic Worldlines*](https://github.com/flyingrobots/aion-paper-02-worldlines)
 3. *WARP Graphs: Computational Holography & Provenance Payloads*
 4. *WARP Graphs: Rulial Distance & Observer Geometry*
 5. *WARP Graphs: Ethics of Deterministic Replay & Provenance Sovereignty*
